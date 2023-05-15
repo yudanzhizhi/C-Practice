@@ -1,89 +1,55 @@
 #include <stdio.h>
-#define INF 9999 
-int num_of_cows, movies; //奶牛数就是结点数
-int matrix[310][310] = {0}, prev[310][310] = {0}; //邻接矩阵和前驱矩阵
-void floyd();
-void floyd()
+int W = 0, H = 0, mirror[1100][100] = {0}, direction[2][4] = {{1, 0, -1, 0}, {0, 1, 0,  -1}};
+ //direction[0]表示x，direction[1]表示y，顺序为右下左上
+char farm[1100][100] = {'\0'};
+int dfs(int row, int column);
+int dfs(int row, int column)
 {
-    for (int i = 0; i < num_of_cows; i++) //用i去试探顶点
+    int x = 0, y = 0, counter = 1; //记录这一片的大小
+    mirror[row][column] = 0;
+    for (int i = 0; i < 4; i++)
     {
-        for (int j = 0; j < num_of_cows; j++) //j、k表示矩阵内的每一个点
+        x = row + direction[0][i];
+        y = column + direction[1][i];
+        if (x >= 0 && x < H && y >= 0 && y < W && mirror[x][y]) 
         {
-            for (int k = 0; k < num_of_cows; k++)
-            {
-                if (matrix[j][k] > matrix[j][i] + matrix[i][k])
-                {
-                    matrix[j][k] = matrix[j][i] + matrix[i][k];
-                    prev[j][k] = prev[i][k]; //i为中转，即前驱为i
-                }
-            }
+            counter += dfs(x, y);
         }
     }
+    return counter;
 }
 int main()
 {
-    int min = INF, cmp_min = 0;
-    scanf("%d %d", &num_of_cows, &movies);
-    for (int i = 0; i < num_of_cows; i++) //初始化矩阵
+    int counter = 0, cmpcounter = 0; //两个计数器，比较下一片和这一片的大小
+    scanf("%d %d", &W, &H);
+    for (int i = 0; i < H; i++)
     {
-        for (int j = 0; j < num_of_cows; j++)
+        scanf("%s", farm[i]);
+    }
+    for (int i = 0; i < H; i++)
+    {
+        for (int j = 0; j < W; j++)
         {
-            prev[i][j] = 0;
-            matrix[i][j] = INF;
-            if (i == j)
+            if (farm[i][j] == '*')
             {
-                matrix[i][j] = 0;
+                mirror[i][j] = 1; //使用镜子记录农场信息
             }
         }
     }
-    while (movies--) //创建邻接矩阵
+    for (int i = 0; i < H; i++)
     {
-        int actors;
-        scanf("%d", &actors);
-        int input[actors];
-        for (int i = 0; i < actors; i++)
+        for (int j = 0; j < W; j++)
         {
-            scanf("%d", &input[i]);
-        }
-        for (int i = 0; i < actors; i++)
-        {
-            for (int j = 0; j < actors; j++)
+            if (mirror[i][j])
             {
-                if (i != j)
-                {
-                    matrix[input[i] - 1][input[j] - 1] = 1;
-                }
+                cmpcounter = dfs(i, j);
+            }
+            if (counter < cmpcounter)
+            {
+                counter = cmpcounter;
             }
         }
-        for (int i = 0; i < actors; i++)
-        {
-            input[i] = 0;
-        }
     }
-    for (int i = 0; i < num_of_cows; i++) //创建前驱矩阵
-    {
-        for (int j = 0; j < num_of_cows; j++)
-        {
-            if (matrix[i][j] > 0 && matrix[i][j] != INF)
-            {
-                prev[i][j] = i;
-            }
-            else prev[i][j] = -1;
-        }
-    }
-    floyd(); //求出每点到其他点的最短路径
-    for (int i = 0; i < num_of_cows; i++) //找出最小值
-    {
-        for (int j = 0; j < num_of_cows; j++)
-        {
-            cmp_min += matrix[i][j];
-        }
-        if (cmp_min < min)
-        {
-            min = cmp_min;
-        }
-        cmp_min = 0;
-    }
-    printf("%d", min*100/(num_of_cows-1));
+    printf("%d", counter);
     return 0;
 }
