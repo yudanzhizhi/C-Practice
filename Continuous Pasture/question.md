@@ -1,21 +1,25 @@
-The cows have been making movies lately, so they are ready to play a variant of the famous game "Six Degrees of Kevin Bacon".      
+Farmer John purchased satellite photos of W x H pixels of his farm (1 ≤ W ≤ 80, 1 ≤ H ≤ 1000) and wishes to determine the largest 'contiguous' (connected) pasture. Pastures are contiguous when any pair of pixels in a pasture can be connected by traversing adjacent vertical or horizontal pixels that are part of the pasture. (It is easy to create pastures with very strange shapes, even circles that surround other circles.)
 
-The game works like this: each cow is considered to be zero degrees of separation (degrees) away from herself. If two distinct cows have been in a movie together, each is considered to be one 'degree' away from the other. If a two cows have never worked together but have both worked with a third cow, they are considered to be two 'degrees' away from each other (counted as: one degree to the cow they've worked with and one more to the other cow). This scales to the general case.      
+Each photo has been digitally enhanced to show pasture area as an asterisk ('*') and non-pasture area as a period ('.'). Here is a 10 x 5 sample satellite photo:  
 
-The N (2 ≤ N ≤ 300) cows are interested in figuring out which cow has the smallest average degree of separation from all the other cows. excluding herself of course. The cows have made M (1 ≤ M ≤ 10000) movies and it is guaranteed that some relationship path exists between every pair of cows.   
+..*.....**    
+.**..*****    
+.*...*....    
+..****.***     
+..****.***    
+	
+	
+This photo shows three contiguous pastures of 4, 16, and 6 pixels. Help FJ find the largest contiguous pasture in each of his satellite photos.    
 
 ### Input  
-Line 1: Two space-separated integers: N and M.
+Line 1: Two space-separated integers: W and H
 
-Lines 2: M+1: Each input line contains a set of two or more space-separated integers that describes the cows appearing in a single movie. The first integer is the number of cows participating in the described movie, (e.g., Mi); the subsequent Mi integers tell which cows were.
+Lines 2: H+1: Each line contains W "*" or "." characters representing one raster line of a satellite photograph.
 
 ### Output
-Line 1: A single integer that is 100 times the shortest mean degree of separation of any of the cows.
+Line 1: The size of the largest contiguous field in the satellite photo.
 
 ### Sample
 | Input | Output |
 | -------- | -------- |
-|4 2<br>3 1 2 3<br>2 3 4|100|
-
-### Hint
-[Cow 3 has worked with all the other cows and thus has degrees of separation: 1, 1, and 1 -- a mean of 1.00 .]
+|10 5<br>..*.....**<br>.**..*****<br>.*...*....<br>..****.***<br>..****.***|16|
