@@ -2,11 +2,11 @@ Farmer John purchased satellite photos of W x H pixels of his farm (1 ≤ W ≤ 
 
 Each photo has been digitally enhanced to show pasture area as an asterisk ('*') and non-pasture area as a period ('.'). Here is a 10 x 5 sample satellite photo:  
 
-..*.....**    
-.**..*****    
-.*...*....    
-..****.***     
-..****.***    
+\.\.\*\.\.\.\.\.\*\*    
+\.\*\*\.\.\*\*\*\*\*    
+\.\*\.\.\.\*\.\.\.\.    
+\.\.\*\*\*\*\.\*\*\*     
+\.\.\*\*\*\*\.\*\*\*    
 	
 	
 This photo shows three contiguous pastures of 4, 16, and 6 pixels. Help FJ find the largest contiguous pasture in each of his satellite photos.    
@@ -22,4 +22,4 @@ Line 1: The size of the largest contiguous field in the satellite photo.
 ### Sample
 | Input | Output |
 | -------- | -------- |
-|10 5<br>..*.....**<br>.**..*****<br>.*...*....<br>..****.***<br>..****.***|16|
+|10 5<br>\.\.\*\.\.\.\.\.\*\*<br>\.\*\*\.\.\*\*\*\*\*<br>\.\*\.\.\.\*\.\.\.\.<br>\.\.\*\*\*\*\.\*\*\*<br>\.\.\*\*\*\*\.\*\*\*|16|
